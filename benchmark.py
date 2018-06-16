@@ -5,7 +5,7 @@ import re
 import time
 
 #wait for postgres startup
-time.sleep(5)
+time.sleep(25)
 
 if os.environ.get('BENCHMARK_DB') is None:
     raise Exception('environment variable benchmark_database_name is not set')
