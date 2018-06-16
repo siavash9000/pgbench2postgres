@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+
+  postgressql:
+    image: postgres:9.6
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pgbench
+      POSTGRES_USER: pgbench
+    volumes:
+       - pgbench2postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  pgbench2postgres:
+    depends_on:
+        - postgressql
+    build:
+        context: .
+    image: pgbench2postgres:latest
+    environment:
+      PGPASSWORD: pgbench
+      PGUSER: pgbench
+      PGHOST: postgressql
+      RESULT_DB: results
+      BENCHMARK_DB: benchmark
+
+volumes:
+  pgbench2postgres:
