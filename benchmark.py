@@ -8,7 +8,7 @@ import time
 time.sleep(25)
 
 if os.environ.get('BENCHMARK_DB') is None:
-    raise Exception('environment variable benchmark_database_name is not set')
+    raise Exception('environment variable BENCHMARK_DB is not set')
 if os.environ.get('RESULT_DB') is None:
     raise Exception('environment variable RESULT_DB is not set')
 
