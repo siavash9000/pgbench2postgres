@@ -45,6 +45,7 @@ def pgbench_init(benchmark_db):
 
 
 def run_pgbench(benchmark_db):
+    logging.warning("starting pgbench run")
     benchmark_cmd = "pgbench -c 1 -j 1 -t 25 ${benchmark_db}"
     benchmark_cmd = string.Template(benchmark_cmd).substitute(locals())
     return subprocess.getoutput(benchmark_cmd).strip()
@@ -62,6 +63,7 @@ def parse_result(result):
 
 
 def persist_result(error_count, latency_average, tps_including_connections, tps_excluding_connections):
+    logging.warning("persisting result now")
     insert_cmd = string.Template("psql -d results -c '"
                                  "INSERT INTO result (error_count,latency_average,"
                                  "tps_including_connections,tps_excluding_connections) "
@@ -79,3 +81,4 @@ while True:
     result = run_pgbench(benchmark_database_name)
     error_count, latency_average, tps_including_connections, tps_excluding_connections = parse_result(result)
     persist_result(error_count, latency_average, tps_including_connections, tps_excluding_connections)
+
