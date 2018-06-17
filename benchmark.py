@@ -52,14 +52,17 @@ def run_pgbench(benchmark_db):
 
 
 def parse_result(result):
-    lines = result.split('\n')
-    count = int(lines[7].split(':')[1].strip().split('/')[1])
-    processed_count = int(lines[7].split(':')[1].strip().split('/')[0])
-    error_count = processed_count - count
-    latency_average = float(re.search('latency average = (.+?) ms', lines[8]).group(1))
-    tps_including_connections = float(re.search('tps = (.+?) \(including connections establishing\)', lines[9]).group(1))
-    tps_excluding_connections = float(re.search('tps = (.+?) \(excluding connections establishing\)', lines[10]).group(1))
-    return error_count, latency_average, tps_including_connections, tps_excluding_connections
+    try:
+        lines = result.split('\n')
+        count = int(lines[7].split(':')[1].strip().split('/')[1])
+        processed_count = int(lines[7].split(':')[1].strip().split('/')[0])
+        error_count = processed_count - count
+        latency_average = float(re.search('latency average = (.+?) ms', lines[8]).group(1))
+        tps_including_connections = float(re.search('tps = (.+?) \(including connections establishing\)', lines[9]).group(1))
+        tps_excluding_connections = float(re.search('tps = (.+?) \(excluding connections establishing\)', lines[10]).group(1))
+        return error_count, latency_average, tps_including_connections, tps_excluding_connections
+    except Exception as e:
+        logging.exception(result)
 
 
 def persist_result(error_count, latency_average, tps_including_connections, tps_excluding_connections):
