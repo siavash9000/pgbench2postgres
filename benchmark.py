@@ -38,6 +38,7 @@ def create_result_table():
 
 
 def pgbench_init(benchmark_db):
+    logging.warning("starting pgbench init")
     pgbench_init = "pgbench -i -s 10 ${benchmark_db}"
     pgbench_init = string.Template(pgbench_init).substitute(locals())
     check_database_exists_output = subprocess.getoutput(pgbench_init).strip()
