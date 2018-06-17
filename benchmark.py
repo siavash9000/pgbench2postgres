@@ -73,9 +73,9 @@ def persist_result(error_count, latency_average, tps_including_connections, tps_
 create_db(benchmark_database_name)
 create_db(result_database_name)
 create_result_table()
-pgbench_init(benchmark_database_name)
+#pgbench_init(benchmark_database_name)
 while True:
-    time.sleep(0.1)
+    #time.sleep(1)
     result = run_pgbench(benchmark_database_name)
     error_count, latency_average, tps_including_connections, tps_excluding_connections = parse_result(result)
     persist_result(error_count, latency_average, tps_including_connections, tps_excluding_connections)
