@@ -38,7 +38,7 @@ def create_result_table():
 
 
 def pgbench_init(benchmark_db):
-    pgbench_init = "pgbench -i -s 25 ${benchmark_db}"
+    pgbench_init = "pgbench -i -s 10 ${benchmark_db}"
     pgbench_init = string.Template(pgbench_init).substitute(locals())
     check_database_exists_output = subprocess.getoutput(pgbench_init).strip()
     subprocess.getoutput(check_database_exists_output).strip()
@@ -78,7 +78,7 @@ def persist_result(error_count, latency_average, tps_including_connections, tps_
 create_db(benchmark_database_name)
 create_db(result_database_name)
 create_result_table()
-#pgbench_init(benchmark_database_name)
+pgbench_init(benchmark_database_name)
 while True:
     time.sleep(1)
     result = run_pgbench(benchmark_database_name)
