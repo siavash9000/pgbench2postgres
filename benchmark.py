@@ -55,6 +55,9 @@ def run_pgbench(benchmark_db):
 def parse_result(result):
     try:
         lines = result.split('\n')
+        if 'WARNING:  corrupted statistics file' in result:
+            logging.warning(lines[0])
+            del lines[0]
         count = int(lines[7].split(':')[1].strip().split('/')[1])
         processed_count = int(lines[7].split(':')[1].strip().split('/')[0])
         error_count = processed_count - count
