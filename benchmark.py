@@ -47,7 +47,7 @@ def pgbench_init(benchmark_db):
 
 def run_pgbench(benchmark_db):
     logging.warning("starting pgbench run")
-    benchmark_cmd = "pgbench -c 1 -j 1 -t 100 ${benchmark_db}"
+    benchmark_cmd = "pgbench -c 1 -j 1 -t 25 ${benchmark_db}"
     benchmark_cmd = string.Template(benchmark_cmd).substitute(locals())
     return subprocess.getoutput(benchmark_cmd).strip()
 
