@@ -8,12 +8,14 @@ import time
 time.sleep(25)
 
 if os.environ.get('BENCHMARK_DB') is None:
-    raise Exception('environment variable BENCHMARK_DB is not set')
-if os.environ.get('RESULT_DB') is None:
-    raise Exception('environment variable RESULT_DB is not set')
+    benchmark_database_name = 'benchmark'
+else:
+    benchmark_database_name = os.environ.get('BENCHMARK_DB')
 
-benchmark_database_name = os.environ.get('BENCHMARK_DB')
-result_database_name = os.environ.get('RESULT_DB')
+if os.environ.get('RESULT_DB') is None:
+    result_database_name = 'results'
+else:
+    result_database_name = os.environ.get('RESULT_DB')
 
 
 def create_db(db_name):
